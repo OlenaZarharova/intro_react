@@ -1,0 +1,30 @@
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+} from "react-router-dom";
+
+import SignUpPage from "../pages/SignupPage/SignupPage";
+import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
+import LandingPage from "../pages/LandingPage/LandingPage";
+import LoginPage from "../pages/LoginPage/LoginPage";
+import Layout from "../components/Layout/Layout";
+
+const routes = createRoutesFromElements(
+  <>
+    <Route path="/" element={<Layout />}>
+      <Route index element={<LandingPage />} />
+      <Route path="products" element={<LandingPage />} />
+    </Route>
+    <Route path="/account">
+      <Route path="register" element={<SignUpPage />} />
+      <Route path="login" element={<LoginPage />} />
+    </Route>
+
+    <Route path="*" element={<NotFoundPage />} />
+  </>
+);
+
+const router = createBrowserRouter(routes);
+
+export default router;

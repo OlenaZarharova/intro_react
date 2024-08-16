@@ -1,0 +1,8 @@
+.card {
+  text-align: center;
+  background-color: var(--primary-color-light);
+}
+
+.card img {
+  padding: 5px;
+}
