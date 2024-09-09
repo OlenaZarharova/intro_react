@@ -1,0 +1,21 @@
+.image {
+  max-height: 40vh;
+}
+
+.details_section {
+  background-color: var(--secondary-color-light);
+  padding: 20px;
+  border: 1px solid var(--primary-color-dark);
+  text-align: center;
+}
+
+.details_section h5 {
+  text-align: center;
+  font-size: 30px;
+}
+
+@media only screen and (max-width: 600px) {
+  .image {
+    height: 200px;
+  }
+}

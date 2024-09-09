@@ -2,13 +2,17 @@ import { Container, Row, Form, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import classes from "./LoginPage.module.css";
 import FormInput from "../../components/FormInput/FormInput";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { UserContext } from "../../contexts/userContext";
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [validated, setValidated] = useState(false);
+
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     const form = event.currentTarget;
     event.preventDefault();
@@ -18,14 +22,18 @@ export default function LoginPage() {
       setValidated(true);
       return;
     }
-    navigate("/", {
-      state: {
-        user: {
-          email,
-          password,
-        },
+
+    setUser({
+      firstName: "",
+      lastName: "",
+      email,
+      address: {
+        city: "",
+        country: "",
       },
     });
+
+    navigate("/");
   };
 
   return (

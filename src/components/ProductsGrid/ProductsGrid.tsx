@@ -30,7 +30,11 @@ export default function ProductsGrid({
           {productsInRow.map((product, i) => (
             <Col sm={12} md={4} className="mb-3" key={`${rowNumber}_${i}`}>
               <Card className={classes.card} style={{ width: "18rem" }}>
-                <Card.Img variant="top" src={product.imageUrl} height="200px" />
+                <Card.Img
+                  variant="top"
+                  src={product.images[0]}
+                  height="200px"
+                />
                 <Card.Body>
                   <Card.Title>{product.name}</Card.Title>
                   <Card.Text>

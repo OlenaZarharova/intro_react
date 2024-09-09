@@ -1,0 +1,16 @@
+.add_product {
+  margin-left: 20px;
+}
+
+.btn_search {
+  margin-right: 20px;
+}
+
+@media screen and (max-width: 700px) {
+  .add_product {
+    margin-left: 20px;
+  }
+  .btn_search {
+    margin-right: 20px;
+  }
+}

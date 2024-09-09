@@ -1,9 +1,10 @@
 export default interface Product {
-  id: number;
+  id: string;
   name: string;
   price: number;
-  imageUrl?: string;
+  images: string[];
   postedAt: Date;
+  postedBy: string;
   description?: string;
   isSold?: boolean;
 }

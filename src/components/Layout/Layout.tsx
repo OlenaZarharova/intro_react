@@ -19,7 +19,7 @@ export default function Layout() {
         <Container fluid>
           <Link to="/">
             <img
-              src="src/assets/logo.svg"
+              src="src/assets/parrot.png"
               width="30"
               height="30"
               alt="Kidimer shop"
@@ -28,11 +28,11 @@ export default function Layout() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className={classes.nav_item_container + " me-auto"}>
-              <NavLink to="/home">
+              <NavLink to="home">
                 <GoHome />
                 Home
               </NavLink>
-              <NavLink to="/products">
+              <NavLink to="products">
                 <GiGemNecklace />
                 Products
               </NavLink>

@@ -6,6 +6,12 @@
   background-color: var(--primary-color-dark);
 }
 
+.nav_item_container button {
+  background-color: transparent;
+  border: none;
+  color: var(--primary-color-light);
+}
+
 .nav_item_container a {
   padding: 0px 15px;
   text-decoration: none;
@@ -14,11 +20,20 @@
   text-align: center;
 }
 
-.nav_item_container a:hover {
+.nav_item_container a:hover,
+.nav_item_container button:hover {
   color: var(--secondary-color-light);
 }
 
-.nav_item_container a svg {
+.nav_item_container a svg,
+.nav_item_container button svg {
   margin-right: 5px;
   color: var(--primary-color-light);
 }
+/* 
+@media only screen and (max-width: 600px) {
+  .nav_item_container a,
+  .nav_item_container button {
+    padding: 10px 0 px;
+  }
+} */

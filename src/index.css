@@ -50,3 +50,10 @@
   color: red;
   margin-top: 5px;
 }
+
+.title {
+  text-align: center;
+  font-weight: bold;
+  color: var(--primary-color-dark);
+  font-size: 30px;
+}

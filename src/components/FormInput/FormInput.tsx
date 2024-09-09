@@ -2,7 +2,7 @@ import { Form } from "react-bootstrap";
 
 interface FormInputProps {
   title: string;
-  type: "text" | "email" | "password";
+  type: "text" | "email" | "password" | "textarea";
   required?: boolean;
   id?: string;
   value: string | number;
@@ -10,6 +10,8 @@ interface FormInputProps {
   errorMessage?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  min?: string;
+  max?: string;
 }
 
 export default function FormInput({
@@ -22,6 +24,8 @@ export default function FormInput({
   onBlur = () => {},
   placeholder,
   errorMessage,
+  min,
+  max,
 }: FormInputProps): JSX.Element {
   id = id ? id : title;
   return (
@@ -35,6 +39,9 @@ export default function FormInput({
         onChange={onChange}
         onBlur={onBlur}
         placeholder={placeholder}
+        min={min}
+        max={max}
+        as={type === "textarea" ? "textarea" : undefined}
       />
       <Form.Control.Feedback type="invalid">
         {required && !errorMessage ? "Required field" : errorMessage}
