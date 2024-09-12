@@ -5,7 +5,6 @@ import {
 } from "react-router-dom";
 
 import Layout from "../components/Layout/Layout";
-import HomePage from "../pages/HomePage/HomePage";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
 import ProductDetailsPage from "../pages/ProductDetailsPage/ProductDetailsPage";
@@ -13,6 +12,7 @@ import ProductFormPage from "../pages/ProductFromPage/ProductFormPage";
 import ProductsPage from "../pages/ProductsPage/ProductsPage";
 import SettingsPage from "../pages/Settings/Settings";
 import SignUpPage from "../pages/SignupPage/SignupPage";
+import HomePage from "../pages/HomePage/HomePage";
 
 const routes = createRoutesFromElements(
   <>
@@ -20,6 +20,8 @@ const routes = createRoutesFromElements(
       <Route index element={<ProductsPage />} />
       <Route path="products" element={<ProductsPage />} />
       <Route path="products/:productId" element={<ProductDetailsPage />} />
+      <Route path="addProduct/:productId?" element={<ProductFormPage />} />
+
       <Route path="me/products" element={<ProductFormPage />} />
       <Route path="home" element={<HomePage />} />
       <Route path="settings" element={<SettingsPage />} />

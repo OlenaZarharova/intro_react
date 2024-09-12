@@ -1,19 +1,37 @@
 import { useParams } from "react-router-dom";
 import Product from "../../models/Product";
-import { useState } from "react";
-import dummyProducts from "../../dummyData/dummyProducts";
+import { useEffect, useState } from "react";
 import { Carousel, Container, Row, Image } from "react-bootstrap";
 import classes from "./ProductDetailsPage.module.css";
 import PageTitle from "../../components/PageTitle/PageTitle";
+import productsService from "../../services/productsService";
+import httpError from "../../models/httpError";
+import { AxiosError } from "axios";
 
 export default function ProductDetailsPage() {
   const { productId } = useParams();
 
-  const [product] = useState<Product | undefined>(
-    dummyProducts.find((p) => p.id === productId)
-  );
+  const [product, setProduct] = useState<Product | undefined>(undefined);
+  const [error, setError] = useState<httpError | undefined>();
 
-  console.log(product);
+  useEffect(() => {
+    const getProducts = async () => {
+      try {
+        const response = await productsService.getProduct(productId ?? "");
+        setProduct(response);
+      } catch (error) {
+        const e = error as AxiosError;
+        setError({ message: e.message });
+      } finally {
+        //setIsLoading(false);
+      }
+
+      // onPageChangeHandler(activePage);
+      //setIsLoading(false);
+    };
+
+    getProducts();
+  }, []);
 
   return product ? (
     <Container fluid>
@@ -34,12 +52,6 @@ export default function ProductDetailsPage() {
         <h5>Price: ${product.price}</h5>
         <hr />
         {product.description && <p>{product.description}</p>}
-        <hr />
-        <p>Posted @ {product.postedAt.toDateString()}</p>
-        <p>
-          Seller email:
-          <a href={`mailto:${product.postedBy}`}>{product.postedBy}</a>
-        </p>
       </Row>
     </Container>
   ) : (

@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Container, Form, Row, Col, Button } from "react-bootstrap";
 import Address from "../../models/address";
 import classes from "./SignupPage.module.css";
 import FormInput from "../../components/FormInput/FormInput";
 import { useNavigate, Link } from "react-router-dom";
+import usersService from "../../services/usersService";
+import { UserContext } from "../../contexts/userContext";
 
 const SignUpPage = (): JSX.Element => {
   const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
   const [validated, setValidated] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -18,7 +21,7 @@ const SignUpPage = (): JSX.Element => {
     country: "",
   });
 
-  const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     const form = event.currentTarget;
     event.preventDefault();
     event.stopPropagation();
@@ -27,16 +30,22 @@ const SignUpPage = (): JSX.Element => {
       setValidated(true);
       return;
     }
-    navigate("/", {
-      state: {
-        user: {
-          firstName,
-          lastName,
-          email,
-          address,
-        },
-      },
-    });
+
+    try {
+      const newUser = await usersService.createUser({
+        firstName,
+        lastName,
+        email,
+        address,
+        id: 0,
+        password,
+        confirmPassword,
+      });
+      setUser(newUser);
+      navigate("/");
+    } catch (error) {
+    } finally {
+    }
   };
 
   return (

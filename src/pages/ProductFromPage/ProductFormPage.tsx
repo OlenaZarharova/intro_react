@@ -1,21 +1,51 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import FormInput from "../../components/FormInput/FormInput";
 import ImageUpload from "../../components/ImageUpload/ImageUpload";
-import dummyProducts from "../../dummyData/dummyProducts";
 import { UserContext } from "../../contexts/userContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Product from "../../models/Product";
 import PageTitle from "../../components/PageTitle/PageTitle";
+import productsService from "../../services/productsService";
 
 export default function ProductFormPage() {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
+  const { productId } = useParams();
+  const [products] = useState<Product[]>([]);
+  // const [product, setProduct] = useState<Product | undefined>(undefined);
+
+  // const product = products.find((p) => p.id === productId);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [hasError, setHasError] = useState<boolean>(false);
   const [isValidated, setIsValidated] = useState(false);
+
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [images, setImages] = useState<File[]>([]);
+
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        setIsLoading(true);
+        const { name, price, description } = await productsService.getProduct(
+          productId!
+        );
+        setName(name);
+        setPrice(price.toString());
+        setDescription(description ?? "");
+      } catch (error) {
+        setHasError(true);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (productId) {
+      getProduct();
+    }
+  }, [productId]);
 
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     const form = event.currentTarget;
@@ -28,10 +58,12 @@ export default function ProductFormPage() {
     }
 
     const newProduct: Product = {
-      id: String(dummyProducts.length + 1),
+      // id: String(dummyProducts.length + 1),
+      id: "",
       name,
       price: Number(price),
-      postedBy: user!.email,
+      ownerId: user!.id,
+      ownerEmail: user!.email,
       postedAt: new Date(),
       description,
       images:
@@ -40,7 +72,7 @@ export default function ProductFormPage() {
           : ["https://placehold.co/600x400"],
     };
 
-    dummyProducts.push(newProduct);
+    // dummyProducts.push(newProduct);
 
     navigate(`/products/${newProduct.id}`);
   };
@@ -101,6 +133,7 @@ export default function ProductFormPage() {
           </Col>
         </Row>
       </Form>
+      {/* {hasError ? "Error Message Alert" : pageContent} */}
     </Container>
   );
 }
